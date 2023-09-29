@@ -10,7 +10,6 @@ let allDots = []
 //initialization
 let i = 0
 
-
 //fonction pricipale
 function main() {
     createDots()
@@ -77,7 +76,7 @@ function createDots() {
     //une boucle pour créer tous les points
     for (let i = 0; i < slides.length; i++) {
         //création des élements span dans la div dots
-        let dot = document.createElement("span")
+        const dot = document.createElement("span")
         //ajouter la class .dot à tous les span
         dot.classList.add("dot")
         //condition pour ajouté la class .dot_selected au premier span
@@ -87,6 +86,12 @@ function createDots() {
 
         //ajouter les span à la div parent .dots
         dotsTag.appendChild(dot)
+
+        //quand on clique sur point, on affiche le slide correspondant 
+        dot.addEventListener("click", () => {
+            changeSlideByDotClick(i)
+        })
+       
     }
 
     allDots = document.querySelectorAll(".dot")
@@ -103,4 +108,20 @@ function showSlide() {
     //on affiche l'image et le tag suivant 
     bannerImg.src = `./assets/images/slideshow/${nextImgSr}`
     tags.innerHTML = `${nextTagLine}`
+}
+
+
+//fonction pour afficher le slide quand on clique sur un point
+function changeSlideByDotClick(index) {
+    //d'abord on supprime la class"dot_selected" sur le point actuel
+    allDots[i].classList.remove("dot_selected")
+
+    //on attache l'index du point cliqué à celui du slide
+    i = index
+
+    //on ajoute la class"dot_selected" au point cliqué
+    allDots[i].classList.add("dot_selected")
+
+    //on affiche le slide
+    showSlide()
 }
